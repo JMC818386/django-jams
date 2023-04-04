@@ -92,25 +92,52 @@ Ports served:
         return self.name
 #
     class Album(model.Model):
-        title = models.CharField(max_length=100)
+        name = models.CharField(max_length=100)
 
         def __str__(self):
         return self.name
 #
     class Genre(model.Model):
-        type = models.CharField(max_length=100)
+        name = models.CharField(max_length=100)
 
         def __str__(self):
         return self.name
 #
     class Playlist(model.Model):
-        title = models.CharField(max_length=100)
+        name = models.CharField(max_length=100)
 
         def __str__(self):
         return self.name
 
 ## **Serializers:**
-??????
+    import .models import Song, Artist, Album, Genre, Playlist
+
+    class SongSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Song
+            fields = ['name', 'artist_id', 'album_id', 'genre_id', 'songs_playlist']
+    
+    class ArtistSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Artist
+            fields = ['name']
+
+    class AlbumSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Album
+            fields = ['name']
+    
+    class GenreSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Genre
+            fields = ['name]
+
+    class PlaylistSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Playlist
+            fields = ['name']
+
+
 
 ## **Views**
 ### **(musiclibrary (PROJECT) folder)**
@@ -147,21 +174,62 @@ Ports served:
         selected_playlist = Playlist.objects.get(pk=playlist_id)
         print(selected_playlist)
         return HttpResponse('<h1>Playlist Name: %s</h1>' % selected_playlist.name)
+#
+    from .serializers import 
+                        UserSerializer, 
+                        GroupSerializer, 
+                        SongSerializer, 
+                        ArtistSerializer, 
+                        AlbumSerializer,
+                        GenreSerializer,
+                        PlaylistSerializer
+
+    class SongViewSet(viewsets.ModelViewSet):
+        queryset = Song.objects.all()
+        serializer_class = SongSerializer
+    
+    class ArtistViewSet(viewsets.ModelViewSet):
+        queryset = Song.objects.all()
+        serializer_class = ArtistSerializer
+    
+    class AlbumViewSet(viewsets.ModelViewSet):
+        queryset = Song.objects.all()
+        serializer_class = AlbumSerializer
+    
+    class GenreViewSet(viewsets.ModelViewSet):
+        queryset = Song.objects.all()
+        serializer_class = GenreSerializer
+    
+    class PlaylistViewSet(viewsets.ModelViewSet):
+        queryset = Song.objects.all()
+        serializer_class = PlaylistSerializer
+
 
 ## **URL's**
 ### **(djangojams (APP) folder)**
 
     from django.contrib import admin
-    from django.urls import path
+    from django.urls import path, include
+    from rest_framework import routers
     from musiclibrary import views
 
-    urlpatterns = [
+    router = routers.DefaultRouter()
+    router.register(r'users', views.UserViewSet)
+    router.register(r'groups', views.GroupViewSet)
+    router.register(r'songs', views.SongViewSet)
+    router.register(r'artists', views.ArtistViewSet)
+    router.register(r'albums', views.AlbumViewSet)
+    router.register(r'genres', views.GenresViewSet)
+    router.register(r'playlists', views.PlaylistsViewSet)
 
-    path(‘user/’, admin.site.urls),
+
+    urlpatterns = [
+    (?)path(‘user/’, admin.site.urls),
+    (?)path('admin/', admin.site.urls),
+    path('', include(router.urls)),
     path(‘song/<int:song_id>/’,views.get_song),
     path(‘artist/<int:artist_id>/’,views.get_artist),
     path(‘album/<int:album_id>/’,views.get_album),
     path(‘genre/<int:genre_id>/’,views.get_genre),
     path(‘playlist/<int:playlist_id>/’,views.get_playlist),
-
     ]
