@@ -71,7 +71,7 @@ Ports served:
     - song_id
     - playlist_id
 #
-![image](img/diagram-01.png)
+![image](img/diagram.png)
 #
 ## **Models:**
 
@@ -115,7 +115,7 @@ Ports served:
     class SongSerializer(serializers.ModelSerializer):
         class Meta:
             model = Song
-            fields = ['name', 'artist_id', 'album_id', 'genre_id', 'songs_playlist']
+            fields = ['name', 'artist', 'album', 'playlists', 'genres']
     
     class ArtistSerializer(serializers.ModelSerializer):
         class Meta:
@@ -144,14 +144,15 @@ Ports served:
 
     from django.shortcuts import render
     from django.http import HttpResponse
-    from .serializers import 
-                        UserSerializer, 
-                        GroupSerializer, 
-                        SongSerializer, 
-                        ArtistSerializer, 
-                        AlbumSerializer,
-                        GenreSerializer,
-                        PlaylistSerializer
+    from .serializers import (
+                                UserSerializer, 
+                                GroupSerializer, 
+                                SongSerializer, 
+                                ArtistSerializer, 
+                                AlbumSerializer,
+                                GenreSerializer,
+                                PlaylistSerializer
+                             )
 
     class SongViewSet(viewsets.ModelViewSet):
         queryset = Song.objects.all()
