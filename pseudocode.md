@@ -77,37 +77,37 @@ Ports served:
 
     class Song(model.Model):
         name = models.CharField(max_length=100)
-        artist_id = models.ForeignKey(‘Artist’, on_delete=models.PROTECT, null=True)
-        album_id = models.ForeignKey(‘Album’, on_delete=models.PROTECT, null=True)
-        genre_id =  models.ForeignKey(‘Genre’, on_delete=models.PROTECT, null=True)
-        songs_playlists = models.ManyToManyField(‘Playlists’, on_delete=models.PROTECT, null=True)
+        artist = models.ForeignKey(‘Artist’, on_delete=models.PROTECT, null=True)
+        album = models.ForeignKey(‘Album’, on_delete=models.PROTECT, null=True)
+        playlists = models.ManyToManyField(‘Playlists’, on_delete=models.PROTECT, null=True)
+        genres = models.ManyToManyField(‘Genre’, on_delete=models.PROTECT, null=True)
 
         def __str__(self):
-        return self.name
+            return self.name
 #
     class Artist(model.Model):
         name = models.CharField(max_length=100)
 
         def __str__(self):
-        return self.name
+            return self.name
 #
     class Album(model.Model):
         name = models.CharField(max_length=100)
 
         def __str__(self):
-        return self.name
+            return self.name
 #
     class Genre(model.Model):
         name = models.CharField(max_length=100)
 
         def __str__(self):
-        return self.name
+            return self.name
 #
     class Playlist(model.Model):
         name = models.CharField(max_length=100)
 
         def __str__(self):
-        return self.name
+            return self.name
 
 ## **Serializers:**
     import .models import Song, Artist, Album, Genre, Playlist
@@ -144,37 +144,6 @@ Ports served:
 
     from django.shortcuts import render
     from django.http import HttpResponse
-    import .models import Song
-    import .models import Artist
-    import .models import Album
-    import .models import Genre
-    import .models import Playlist
-
-    def get_song(request, song_id):
-        selected_song = Song.objects.get(pk=song_id)
-        print(selected_song)
-        return HttpResponse('<h1>Song Title: %s</h1>' % selected_song.name)
-
-    def get_artist(request, artist_id):
-        selected_artist = Artist.objects.get(pk=artist_id)
-        print(selected_artist)
-        return HttpResponse('<h1>Artist Name: %s</h1>' % selected_artist.name)
-
-    def get_album(request, album_id):
-        selected_album = Album.objects.get(pk=album_id)
-        print(selected_album)
-        return HttpResponse('<h1>Album Title: %s</h1>' % selected_album.name)
-
-    def get_genre(request, genre_id):
-        selected_genre = Genre.objects.get(pk=genre_id)
-        print(selected_genre)
-        return HttpResponse('<h1>Genre: %s</h1>' % selected_genre.name)
-
-    def get_playlist(request_playlist_id):
-        selected_playlist = Playlist.objects.get(pk=playlist_id)
-        print(selected_playlist)
-        return HttpResponse('<h1>Playlist Name: %s</h1>' % selected_playlist.name)
-#
     from .serializers import 
                         UserSerializer, 
                         GroupSerializer, 
@@ -224,12 +193,6 @@ Ports served:
 
 
     urlpatterns = [
-    (?)path(‘user/’, admin.site.urls),
-    (?)path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path(‘song/<int:song_id>/’,views.get_song),
-    path(‘artist/<int:artist_id>/’,views.get_artist),
-    path(‘album/<int:album_id>/’,views.get_album),
-    path(‘genre/<int:genre_id>/’,views.get_genre),
-    path(‘playlist/<int:playlist_id>/’,views.get_playlist),
     ]
