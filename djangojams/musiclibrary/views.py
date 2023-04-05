@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
-from .models import Song
-from .serializers import UserSerializer, GroupSerializer, SongSerializer
+from .models import *
+from .serializers import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -19,3 +19,16 @@ class GroupViewSet(viewsets.ModelViewSet):
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+
+class UpdateSongViewSet(viewsets.ModelViewSet):
+    queryset = Song.objects.all()
+    serializer_class = UpdateSongSerializer
+    http_method_names = ('post', 'put', 'patch', 'delete')
+
+class ArtistViewSet(viewsets.ModelViewSet):
+        queryset = Artist.objects.all()
+        serializer_class = ArtistSerializer
+
+class AlbumViewSet(viewsets.ModelViewSet):
+        queryset = Album.objects.all()
+        serializer_class = AlbumSerializer
