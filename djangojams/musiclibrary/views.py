@@ -23,7 +23,7 @@ class SongViewSet(viewsets.ModelViewSet):
 class UpdateSongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = UpdateSongSerializer
-    http_method_names = ('post', 'put', 'patch', 'delete')
+    http_method_names = ('get', 'post', 'put', 'patch', 'delete')
 
 class ArtistViewSet(viewsets.ModelViewSet):
         queryset = Artist.objects.all()
