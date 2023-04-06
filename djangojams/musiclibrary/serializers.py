@@ -30,21 +30,40 @@ class GenreSerializer(serializers.ModelSerializer):
         model = Genre
         fields = ['id','name']
 
+class PlaylistSerializer(serializers.ModelSerializer):
+    # artist = ArtistSerializer()
+    # album = AlbumSerializer()
+    # genres = GenreSerializer(many=True)
+    class Meta:
+        model = Playlist
+        fields = ['id','name']
+
 class SongSerializer(serializers.ModelSerializer):
     artist = ArtistSerializer()
     album = AlbumSerializer()
-    genres = GenreSerializer(many='True')
-
+    genres = GenreSerializer(many=True)
+    playlists = PlaylistSerializer(many=True)
     class Meta:
         model = Song
-        fields = ['id', 'name', 'artist', 'album', 'genres']
+        fields = ['id', 'name', 'artist', 'album', 'genres', 'playlists']
 
 class UpdateSongSerializer(serializers.ModelSerializer):
     artist = serializers.PrimaryKeyRelatedField(queryset=Artist.objects.all())
     album = serializers.PrimaryKeyRelatedField(queryset=Album.objects.all())
-    genres = GenreSerializer(many=True)
+    genres = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True)
+    playlists = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all(), many=True)
     class Meta:
         model = Song
-        fields = ['id', 'name', 'artist', 'album', 'genres']
+        fields = ['id', 'name', 'artist', 'album', 'genres', 'playlists']
+
+# class UpdatePlaylistSerializer(serializers.ModelSerializer):
+#     song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
+#     artist = serializers.PrimaryKeyRelatedField(queryset=Artist.objects.all())
+#     album = serializers.PrimaryKeyRelatedField(queryset=Album.objects.all())
+#     genres = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all(), many=True)
+#     playlists = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all(), many=True)
+#     class Meta:
+#         model = Playlist
+#         fields = ['id', 'song', 'name', 'artist', 'album', 'genres', 'playlists']
 
 

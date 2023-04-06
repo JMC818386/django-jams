@@ -10,6 +10,8 @@ router.register(r'songs', views.SongViewSet)
 router.register(r'artists', views.ArtistViewSet)
 router.register(r'albums', views.AlbumViewSet)
 router.register(r'genres', views.GenreViewSet)
+router.register(r'playlists', views.PlaylistViewSet)
+# router.register(r'updateplaylists', views.UpdatePlaylistViewSet)
 router.register(r'updatesong', views.UpdateSongViewSet)
 
 urlpatterns = [
