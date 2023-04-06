@@ -32,3 +32,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
 class AlbumViewSet(viewsets.ModelViewSet):
         queryset = Album.objects.all()
         serializer_class = AlbumSerializer
+
+class GenreViewSet(viewsets.ModelViewSet):
+        queryset = Genre.objects.all()
+        serializer_class = GenreSerializer
